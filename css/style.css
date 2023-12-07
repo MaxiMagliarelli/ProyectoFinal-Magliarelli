@@ -1,0 +1,241 @@
+@font-face {
+  font-family: "bod_cr";
+  src: url(../fonts/bod_cr.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  color: black;
+}
+
+*, ::after, ::before {
+  box-sizing: content-box;
+}
+
+html {
+  font-family: bod_cr;
+  font-size: 1.3em;
+}
+
+body {
+  background: whitesmoke;
+  font-family: bod_cr;
+  font-weight: 900;
+  overflow-x: hidden;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+header {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  background-image: url(../assets/fondo4.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  position: sticky;
+  z-index: 1;
+  top: 1.3em;
+  opacity: 0.8;
+  column-gap: 10px;
+}
+header div img {
+  width: 100px;
+  height: 100px;
+  opacity: 0.8;
+}
+
+.modelarIdeas {
+  color: black;
+}
+.modelarIdeas h1 {
+  font-size: 2em;
+  margin-bottom: 0;
+  line-height: 0;
+  font-weight: 900;
+  color: black;
+}
+
+.arqDiseno p {
+  color: black;
+  font-size: 1em;
+  font-style: italic;
+  margin-left: 1em;
+}
+
+.container-fluid {
+  padding-left: 1em;
+}
+
+nav {
+  width: 97%;
+  font-size: 1.2rem;
+}
+
+.navbar {
+  --bs-navbar-padding-y: 0rem;
+  --bs-navbar-brand-padding-y: 0rem;
+  --bs-navbar-brand-font-size: 0rem;
+}
+
+.navBar {
+  column-gap: 50px;
+}
+.navBar li {
+  list-style-type: none;
+}
+.navBar li a {
+  text-decoration: none;
+  color: black;
+  transition: all 400ms ease;
+}
+.navBar li a:hover {
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+}
+.container-fluid {
+  --bs-gutter-x: 0em;
+}
+
+.carrito {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0px 300px;
+  padding: 10px;
+}
+.carritoContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.ImgCarrito {
+  height: 2.5rem;
+  cursor: pointer;
+  margin: 20px 0;
+}
+#contadorAgregados {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 1px 8px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.filtroContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.card {
+  width: 300px;
+  margin: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+}
+  
+img {
+  max-width: 100%;
+  height: 250px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+  
+h3 {
+  color: #333;
+}
+  
+p {
+  color: #666;
+}
+
+.precio{
+  color: #000;
+  background-color: #d6b385;
+}
+
+button {
+  background-color: rgb(196, 195, 195);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: black;
+  border: none;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+  
+button:hover {
+  background-color: #d6b385;
+}
+
+input {
+  height: 20px;
+  margin: 20px;
+  padding: 6px;
+}
+
+/* Estilo del modal */
+.modal {
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
+  display: none;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #fff;
+  width: 25%;
+  margin: 100px auto ; /* Centrar vertical y horizontalmente */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón de cerrar (x) en el modal */
+.close {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Estilo para la lista de productos en el modal */
+#listaCarrito {
+  list-style: none;
+  padding: 0;
+}
+
+/* Estilo para cada ítem en la lista de productos */
+#listaCarrito li {  
+  margin-bottom: 0px;
+}
+
+.fa-trash-alt{
+  margin-left: 30px;
+}
+.fincomp {
+    background-color: #9daf89;
+    width: 150px;
+    color: black;
+    border: none;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
