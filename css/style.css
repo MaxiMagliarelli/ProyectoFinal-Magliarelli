@@ -179,7 +179,10 @@ button {
 button:hover {
   background-color: #d6b385;
 }
-
+.info{
+  font-size: 1.2rem;
+  border-radius: 10px;
+}
 input {
   height: 20px;
   margin: 20px;
@@ -201,7 +204,7 @@ input {
 /* Contenido del modal */
 .modal-content {
   background-color: #fff;
-  width: 25%;
+  width: 30%;
   margin: 100px auto ; /* Centrar vertical y horizontalmente */
   padding: 20px;
   border-radius: 5px;
@@ -220,17 +223,37 @@ input {
 #listaCarrito {
   list-style: none;
   padding: 0;
+  
 }
 
 /* Estilo para cada ítem en la lista de productos */
 #listaCarrito li {  
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 0px;
+  font-weight:500;
 }
-
+.botonCantidad {
+  width: 10px;
+  padding: 4px 8px;
+  font-size: 16px;
+  color:#000;
+  cursor: pointer;
+  background-color: transparent;
+  font-weight: bold;
+}
 .fa-trash-alt{
   margin-left: 30px;
 }
-.fincomp {
+.btn{
+  display: flex;
+  justify-content: space-around;
+}
+.totalImportes{
+  color: #000;
+}
+
+.fincomp, .vaciarCarrito{
     background-color: #9daf89;
     width: 150px;
     color: black;

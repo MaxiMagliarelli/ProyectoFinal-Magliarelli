@@ -1,44 +1,79 @@
 let carrito = JSON.parse(localStorage.getItem('carrito')) || []; 
+let productos = [];
 
-//Creo mi array de objetos con los distintos productos disponibles.
+document.getElementById("filtroInput").addEventListener("input", filtrarProductos);
 
-const productos = [
-    {nombre: "Asesoria Express", precio: 100000, descripcion: "Asesoria Express con detalles mínimos, no incluye renders.", img:"./assets/asesoriaexpress.jpg"},
-    {nombre: "Asesoria Intermedia", precio: 150000, descripcion: "Asesoria intermedia: incluye plano de distribucion y renders.", img:"./assets/asesoriaintermedia.jpg"},
-    {nombre: "Asesoria Integral", precio: 250000, descripcion: "Asesoria integral con detalles y renders, presupuesto y guia de compras.", img:"./assets/asesoriaintegral.jpg"},
-    {nombre: "Curso de SketchUP", precio: 50000, descripcion: "Curso de SketchUp para diseño y proyección de interiores.", img: "./assets/cursosketchok.jpg"},
-    {nombre: "Ebook de estilos", precio: 10000, descripcion: "Guia completa de los distintos estilos del interiorismo.", img: "./assets/ebook.jpg"},
-    {nombre: "Ebook sobre cocinas", precio: 25000, descripcion: "Todo lo que tenes que saber sobre las refacciones de cocinas.", img:"./assets/ebookcocinas.jpg"},
-];
+function obtenerInfoProductos(){
+    return new Promise((resolve,reject) => {
+        fetch('../json/productos.json')
+            .then(response => {
+                if(!response.ok){
+                    throw new Error ("Error al cargar la API, comunicate con tu administrador.")
+                }
+                return response.json();
+            })
+            .then(data => resolve(data))
+            .catch(error => reject(error))
+            .finally(() => {
+                console.log("Operación completada, independientemente del resultado");
+            });
+    });
+}
+
+async function main (){
+    try{
+        const informacionProductos = await obtenerInfoProductos()
+        productos = informacionProductos;
+        mostrarProductos(productos);
+    }catch(error){
+        console.log("Error en la app", error)
+    }
+}
+main()
 
 function guardarCarritoLocalStorage(){
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
 function agregarAlCarrito(index) {
+    Toastify({
+        text: "Producto agregado al carrito",
+        className: "info",
+        gravity: "bottom",
+        style: {
+        background: "#9daf89",
+        color:"#000"
+        }
+    }).showToast();
+    
     if (index >= 0 && index < productos.length) {
         const productoExistente = carrito.find(item => item.nombre === productos[index].nombre);
         if (productoExistente) {
             productoExistente.cantidad++;
         } else {
+            const { nombre, precio, descripcion } = productos[index];
             carrito.push({
-                nombre: productos[index].nombre,
-                precio: productos[index].precio,
-                descripcion: productos[index].descripcion,
+                nombre,
+                precio,
+                descripcion,
                 cantidad: 1
-            });
+            });       
         }
         guardarCarritoLocalStorage();
         actualizarListaCarrito();
-        actualizarContadorCarrito();
-        mostrarModal();
-        
+        actualizarContadorCarrito();  
     }
 }
+
+actualizarContadorCarrito();
 
 function actualizarContadorCarrito() {
     const contadorElement = document.getElementById('contadorAgregados');
     contadorElement.textContent = carrito.length.toString();
+    const botonVaciarCarrito = document.getElementById('botonVaciarCarrito');
+    botonVaciarCarrito.disabled = carrito.length === 0;
+    const botonFinalizarCompra = document.getElementById('botonFinalizarCompra');
+    botonFinalizarCompra.disabled = carrito.length === 0
 }
 
 function mostrarModal() {
@@ -46,10 +81,28 @@ function mostrarModal() {
     modal.style.display = 'block';
     actualizarListaCarrito();
 }
-function cerrarModal() {                                        
+
+function cerrarModal() {                                    
     const modal = document.getElementById('carritoModal');
     modal.style.display = 'none';
 }
+
+function finalizarCompra(){
+    Toastify({
+        text: "Su compra se realizó con éxito!",
+        className: "info",
+        gravity: "bottom",
+        position: "left",
+        style: {
+        background: "#7fff00",
+        color:"#000"
+        }
+    }).showToast();
+
+    const modal = document.getElementById('carritoModal');
+    modal.style.display = 'none';
+}
+
 function actualizarListaCarrito() {
     const listaCarrito = document.getElementById('listaCarrito');
     listaCarrito.innerHTML = '';
@@ -59,28 +112,63 @@ function actualizarListaCarrito() {
         const item = document.createElement('li');
         const precioTotal = producto.precio * producto.cantidad;
         totalGeneral += precioTotal
-        item.innerHTML = `${producto.nombre} - Precio: $${producto.precio} - Cantidad: ${producto.cantidad} - Total: $${precioTotal}
+        item.innerHTML = `${producto.nombre} - Precio: $${producto.precio}<button class="botonCantidad" onclick="restarCantidad('${producto.nombre}')">--</button>${producto.cantidad}
+        <button class="botonCantidad" onclick="sumarCantidad('${producto.nombre}')">+</button> - Total: $${precioTotal}
         <span class="fas fa-trash-alt float-right" style="cursor: pointer;" onclick="eliminarDelCarrito(${index})"></span>`;
         listaCarrito.appendChild(item);
     });
-    // Mostrar el total general
-    
+
     document.getElementById("totalImportes").textContent = "Total General: $" + totalGeneral;
 }
+
+function restarCantidad(nombreProducto) {
+    const productoExistente = carrito.find(item => item.nombre === nombreProducto);
+        if (productoExistente && productoExistente.cantidad > 1) {
+            productoExistente.cantidad --;
+        }
+        guardarCarritoLocalStorage();
+        actualizarListaCarrito(); 
+}
+
+function sumarCantidad(nombreProducto) {
+    const productoExistente = carrito.find(item => item.nombre === nombreProducto);
+        if (productoExistente) {
+            productoExistente.cantidad ++;
+        }
+        guardarCarritoLocalStorage();
+        actualizarListaCarrito(); 
+}
+
 function eliminarDelCarrito(index) {
-    carrito.splice(index, 1); // Eliminar el elemento del array
+    carrito.splice(index, 1); 
     actualizarListaCarrito();
     actualizarContadorCarrito();
     guardarCarritoLocalStorage();
 }
 
-// Función para mostrar productos en el contenedor
+function vaciarCarrito() {
+    Toastify({
+        text: "Vaciaste el carrito",
+        className: "info",
+        gravity: "top",
+        style: {
+        background: "#ff6347",
+        color:"#000"
+        }
+    }).showToast();
+    carrito = [];
+    localStorage.clear();
+    document.getElementById('botonVaciarCarrito').disabled = true;
+    actualizarListaCarrito();
+    actualizarContadorCarrito();
+}
 
+// Función para mostrar productos en el contenedor
 function mostrarProductos(productosFiltrados) {
     const productosContainer = document.getElementById("productosContainer");
-    productosContainer.innerHTML = ""; // Limpiamos el contenedor antes de mostrar los productos
+    productosContainer.innerHTML = ""; // Limpio el contenedor antes de mostrar los productos
 
-    productosFiltrados.forEach((producto) => {
+    productosFiltrados.map((producto) => {
         const card = document.createElement("div");
         card.classList.add("card");
         card.innerHTML = `
@@ -93,16 +181,11 @@ function mostrarProductos(productosFiltrados) {
         <button onclick="agregarAlCarrito(${productos.indexOf(producto)})">Agregar al carrito</button>`;
         productosContainer.appendChild(card)});
 }
-    // Función para filtrar los productos
-    
-    function filtrarProductos() {
+// Función para filtrar los productos
+function filtrarProductos() {
     const textoBusqueda = document.getElementById("filtroInput").value.toLowerCase();
     const productosFiltrados = productos.filter(producto => 
-        producto.nombre.toLowerCase().includes(textoBusqueda));
+    producto.nombre.toLowerCase().includes(textoBusqueda));
     mostrarProductos(productosFiltrados);
 }
-document.getElementById("filtroInput").addEventListener("input", filtrarProductos);
 
-  // Mostrar todos los productos al cargar la página
-
-    mostrarProductos(productos);

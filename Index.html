@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="./css/style.css">
     <title>Carrito de Compras</title>
 </head>
@@ -44,7 +45,7 @@
         </div>
         <!-- Contenedor del carrito -->
         <div id="productosContainer" class="carrito">
-            <!-- Acá se van a mostrar los productos -->
+        <!-- Acá se van a mostrar los productos -->
         </div>
         <!-- Modal para el carrito -->
         <div id="carritoModal" class="modal">
@@ -52,15 +53,19 @@
                 <span class="close" onclick="cerrarModal()">&times;</span>
                 <h2>Carrito de Compras</h2>
                 <ul id="listaCarrito">
-                <!-- Acá se van a agregar los items hijos creados--> 
+        <!-- Acá se van a agregar los items hijos creados--> 
                 </ul>
-                <p id="totalImportes">Total: $0.00</p>
-                <button  class="fincomp" onclick="cerrarModal()">Finalizar compra</button>
+                <p id="totalImportes" class="totalImportes"></p>
+                <div class="btn">
+                    <button  id="botonVaciarCarrito" class="vaciarCarrito" onclick="vaciarCarrito()">Vaciar carrito</button>
+                    <button  id="botonFinalizarCompra" class="fincomp" onclick="finalizarCompra()">Finalizar compra</button>
+                </div>
             </div>
         </div>
     </main>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./js/carrito.js"></script>
 </body>
 </html>

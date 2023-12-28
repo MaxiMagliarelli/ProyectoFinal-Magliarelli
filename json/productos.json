@@ -1,0 +1,38 @@
+[
+    {
+        "nombre": "Asesoria Express", 
+        "precio": 100000, 
+        "descripcion": "Asesoria Express con detalles mínimos, no incluye renders.", 
+        "img":"./assets/asesoriaexpress.jpg"
+    },
+    {
+        "nombre": "Asesoria Intermedia", 
+        "precio": 150000, 
+        "descripcion": "Asesoria intermedia: incluye plano de distribucion y renders.", 
+        "img":"./assets/asesoriaintermedia.jpg"
+    },
+    {
+        "nombre": "Asesoria Integral", 
+        "precio": 250000, 
+        "descripcion": "Asesoria integral con detalles y renders, presupuesto y guia de compras.", 
+        "img":"./assets/asesoriaintegral.jpg"
+    },
+    {
+        "nombre": "Curso de SketchUP", 
+        "precio": 50000, 
+        "descripcion": "Curso de SketchUp para diseño y proyección de interiores.", 
+        "img": "./assets/cursosketchok.jpg"
+    },
+    {
+        "nombre": "Ebook de estilos", 
+        "precio": 10000, 
+        "descripcion": "Guia completa de los distintos estilos del interiorismo.", 
+        "img": "./assets/ebook.jpg"
+    },
+    {
+        "nombre": "Ebook sobre cocinas", 
+        "precio": 25000, 
+        "descripcion": "Todo lo que tenes que saber sobre las refacciones de cocinas.", 
+        "img":"./assets/ebookcocinas.jpg"
+    }
+]
